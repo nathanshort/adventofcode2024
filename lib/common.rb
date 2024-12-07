@@ -58,9 +58,11 @@ class Point
 
   alias eql? ==
 
-        def hash
-          @x.hash ^ @y.hash
-        end
+  def hash
+    
+    [x,y].hash
+#    p     "#{x},#{y}".hash
+   end
 
   def <=>( other )
     ysort = ( @y <=> other.y )
@@ -172,6 +174,10 @@ class Cursor
         @location.x = tmp.y
         @location.y = -tmp.x
     end
+  end
+
+  def hash
+    "#{@location.hash},#{@heading}".hash
   end
 end
   
