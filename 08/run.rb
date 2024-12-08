@@ -4,7 +4,6 @@ def get_antinodes(antennas,grid,harmonic)
   antinodes = []
   antennas.each do |_,points|
     points.combination(2).each do |p|
-      distance = (p[0].x-p[1].x).abs + (p[0].y-p[1].y).abs
       dy,dx = (p[0].y-p[1].y),(p[0].x-p[1].x)
       loop do
         n1 = Point.new( p[0].x+dx,p[0].y+dy )
