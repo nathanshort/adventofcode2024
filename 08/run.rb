@@ -10,8 +10,7 @@ def get_antinodes(antennas,grid,harmonic)
         antinodes << n1 if grid[n1]
         n2 = Point.new( p[1].x-dx,p[1].y-dy )
         antinodes << n2 if grid[n2]
-        p[0] = n1
-        p[1] = n2
+        p[0], p[1] = n1, n2
         break if ! harmonic || ( !grid[n1] && !grid[n2] )
       end
     end
@@ -21,10 +20,7 @@ end
 
 grid = Grid.new( :io => ARGF.read.chomp )
 antennas = Hash.new { |h,k| h[k]=[] }
-grid.each do |k,v|
-  next unless v != '.'
-  antennas[v] << k
-end
+grid.each { |k,v| antennas[v] << k unless v == '.' }
 
 p get_antinodes(antennas,grid,harmonic=false).uniq.length
 
