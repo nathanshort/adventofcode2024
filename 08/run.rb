@@ -10,8 +10,8 @@ def get_antinodes(antennas,grid,harmonic)
         antinodes << n1 if grid[n1]
         n2 = Point.new( p[1].x-dx,p[1].y-dy )
         antinodes << n2 if grid[n2]
-        p[0], p[1] = n1, n2
         break if ! harmonic || ( !grid[n1] && !grid[n2] )
+        p[0], p[1] = n1, n2
       end
     end
   end
