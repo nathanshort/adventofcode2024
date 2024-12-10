@@ -4,23 +4,7 @@ grid = Grid.new( :io => ARGF.read.chomp ){ |x,y,c| [x,y,c.to_i] }
 zeros = []
 grid.each { |p,v| zeros << p if v == 0 }
 
-sum = 0
-zeros.each do |z|
-  hits = []
-  seen = {}
-  q = [z]
-  while q.length > 0
-    p = q.pop
-    seen[p] = true
-    hits << p if grid[p] == 9
-    p.hvadjacent.each { |a| q << a if ! grid[a].nil? && grid[a]==grid[p]+1 && !seen.key?(a) }
-  end
-  sum += hits.length
-end
-p sum
-
-
-sum = 0
+p1sum,p2sum = 0,0
 zeros.each do |z|
   hits = []
   seen = {}
@@ -37,6 +21,7 @@ zeros.each do |z|
       end
     end
   end
-  sum += hits.length
+  p1sum += hits.map(&:last).uniq.length
+  p2sum += hits.length
 end
-p sum
+p p1sum,p2sum
