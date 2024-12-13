@@ -19,17 +19,14 @@
 # Ay*Tx - Ty*Ax = PB(-1*By*Ax + Bx*Ay)
 # PB = (Ay*Tx - Ty*Ax)/(-1*By*Ax + Bx*Ay)
 
-claws = []
-ARGF.read.split(/\n\n/).each do |claw|
-  d = claw.scan(/\d+/).map(&:to_i)
-  claws << {a:d[0,2],b:d[2,2],t:d[4,2]}
-end
+claws = ARGF.read.split(/\n\n/).map{ |claw| claw.scan(/\d+/).map(&:to_i) }
 
 def doit( claws, tadd )
   claws.sum do |c|
-    pb = (c[:a].last*(c[:t].first+tadd)-(c[:t].last+tadd)*c[:a].first)/(-1*c[:b].last*c[:a].first + c[:b].first*c[:a].last)
-    pa = ((c[:t].first+tadd)-pb*c[:b].first )/c[:a].first
-    pa*c[:a].first+pb*c[:b].first == c[:t].first+tadd && pa*c[:a].last+pb*c[:b].last == c[:t].last+tadd ? pa*3+pb : 0
+    ax,ay,bx,by,tx,ty = c
+    pb = (ay*(tx+tadd)-(ty+tadd)*ax)/(-1*by*ax + bx*ay)
+    pa = ((tx+tadd)-pb*bx )/ax
+    pa*ax+pb*bx == tx+tadd && pa*ay+pb*by == ty+tadd ? pa*3+pb : 0
   end
 end
 
