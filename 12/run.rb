@@ -47,7 +47,6 @@ grid.each do |p,v|
         vfs[pp.x+1] << {:p=>pp.y,:o=>:r} << {:p=>pp.y+1,:o=>:r} if dx == 1
       end
 
-      next if seen.key?(adj)
       queue << adj if ! seen.key?(adj) && grid[adj] == v
     end
   end
@@ -65,6 +64,6 @@ grid.each do |p,v|
 
   price1 += plots * fences
   price2 += plots * segments
-
 end
+
 p price1,price2
