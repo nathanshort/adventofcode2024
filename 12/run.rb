@@ -20,6 +20,8 @@ grid.each do |p,v|
 
     pp.hvadjacent.each do |adj|
 
+      queue << adj if ! seen.key?(adj) && grid[adj] == v
+
       if grid[adj] != v
         fences += 1
 
@@ -46,8 +48,6 @@ grid.each do |p,v|
         vfs[pp.x] << {:p=>pp.y,:o=>:l} << {:p=>pp.y+1,:o=>:l} if dx == -1
         vfs[pp.x+1] << {:p=>pp.y,:o=>:r} << {:p=>pp.y+1,:o=>:r} if dx == 1
       end
-
-      queue << adj if ! seen.key?(adj) && grid[adj] == v
     end
   end
 
