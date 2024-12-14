@@ -32,14 +32,14 @@ end
 # find the second where the distance from the center is minimized
 data = Marshal.load(Marshal.dump(orig))
 distances = []
-centerx,centery = w/2,w/2
+centerx,centery = w/2,h/2
 
 loop_at.times do |tt|
   dfc = 0
   data.each do |d|
     d[:x] = ( d[:x]+t*d[:dx] ) % w
     d[:y] = ( d[:y]+t*d[:dy] ) % h
-    dfc +=  (d[:x]-centerx).abs + (d[:y]-centery).abs
+    dfc += (d[:x]-centerx).abs + (d[:y]-centery).abs
   end
   distances << dfc
 end
