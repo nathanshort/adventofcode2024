@@ -100,6 +100,10 @@ class Cursor
 
   attr_accessor :location, :heading, :ygrows
 
+  def self.caret_to_heading( c )
+    {'^'=>'N','<'=>'W','>'=>'E','v'=>'S'}[c]
+  end
+
   # set :ygrows to :north or :south
   # :north -> north moves, increase the y
   # :south -> south moves, increase the y
@@ -137,19 +141,25 @@ class Cursor
     end
   end
 
-  def next_forward( args )
+  def next_forward_off( args )
+
     factor = ( @ygrows == :south ) ? { 'N' => -1, 'S' => 1, 'E' => 1, 'W' => -1}
              : { 'N' => 1, 'S' => -1, 'E' => 1, 'W' => -1}
 
     x, y = @location.x, @location.y
     case @heading
-    when 'N','S' 
+    when 'N','S'
       y += args[:by] * factor[@heading]
     when 'E','W'
       x += args[:by] * factor[@heading]
     end
+    [x,y]
+  end
+
+  def next_forward( args )
+    x,y = next_forward_off( args )
     Point.new(x,y)
-  end 
+  end
 
   def forward( args )
     factor = ( @ygrows == :south ) ? { 'N' => -1, 'S' => 1, 'E' => 1, 'W' => -1}
