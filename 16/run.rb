@@ -5,10 +5,12 @@ require_relative '../lib/pqueue'
 # then bfs to find all paths - pruning if we get to a ( point,orientation ) that
 # was seen in dijkstra at a lower score
 
-def findpaths( path, point, grid, seen, allpaths, score, movingin, distances, target, best ) 
+  def findpaths( point, grid, seen, allpaths, score, movingin, distances, target, best ) 
 
-  if point == target
-    allpaths << path if score == best
+    if point == target
+      if score == best
+        seen.keys.each{ |k| allpaths << k }
+      end
     return
   end
 
@@ -27,8 +29,8 @@ def findpaths( path, point, grid, seen, allpaths, score, movingin, distances, ta
       end
 
       key = {:p=>pp,:m=>thismove}
-      if ! distances.key?(key) || distances[key] >= sscore
-        findpaths( ( path | [pp] ), pp,grid,seen.dup,allpaths,sscore,thismove,distances,target, best ) if sscore <= best
+      if  distances.key?(key) && distances[key] >= sscore
+        findpaths( pp,grid,seen.dup,allpaths,sscore,thismove,distances,target, best ) if sscore <= best
       end
     end
   end
@@ -80,10 +82,9 @@ distances[{p:start,m: :dy}] = 1000
 
 dodij( pq, grid, distances, visited, eend )
 best = distances.select{ |k,v| k[:p] == eend }.values.min
+p best
 
 allpaths = []
 score = 0
-findpaths( path=[], start, grid, seen={}, allpaths, score, :dx, distances, eend, best )
-p allpaths.flatten.uniq.count+1
-
-
+findpaths( start, grid, seen={}, allpaths, score, :dx, distances, eend, best )
+p allpaths.uniq.length+1
