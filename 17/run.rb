@@ -90,6 +90,8 @@ end
 
 d = ARGF.read.scan(/\d+/).map(&:to_i)
 ra,rb,rc,program = d[0],d[1],d[2],d[3..]
+out = runprogram( ra, rb, rc, program )
+puts out.join(",")
 
 #
 # 2,4 rb = ra % 8
@@ -101,6 +103,8 @@ ra,rb,rc,program = d[0],d[1],d[2],d[3..]
 # 0,3 ra = ra/(2**3)
 # 3,0 jump to beginning if ra != 0
 
+# we will know the ending ra.  so turn the above into terms of ra and
+# we will then work backwards through possible options.
 # rb = ra % 8
 # rb = ( ra % 8 ) ^ 2
 # rc = ra / ( 2 ** (( ra % 8 ) ^ 2) )
