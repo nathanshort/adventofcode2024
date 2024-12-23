@@ -30,7 +30,7 @@ cliques.keys.each do |kk|
     tuples_of_3 = tuples_of_3 + cliques[kk]
     next
   end
-  cliques[kk].each{ |c| c.combination(3).to_a.each{ |x| tuples_of_3 << x } }
+  cliques[kk].each{ |c| c.combination(3).each{ |x| tuples_of_3 << x } }
 end
 
 p tuples_of_3.uniq.count { |x| x.count{ |xx| xx[0] == 't' } > 0 }
