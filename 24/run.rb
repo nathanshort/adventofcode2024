@@ -84,11 +84,11 @@ loop do
   end
 
   x_xor_y = find( xkey,'XOR',ykey,rcircuit )
-  if x_xor_y.nil?
-    p "BAD 1 SHOULDNT HAPPEN x_xor_y"
+  x_and_y = find( xkey,'AND',ykey,rcircuit )
+  if x_xor_y.nil? || x_and_y.nil?
+    p "BAD 1 SHOULDNT HAPPEN #{x_xor_y} #{x_and_y}"
     exit
   end
-  x_and_y = find( xkey,'AND',ykey,rcircuit )
 
   x_xor_y__xor__carry = find( x_xor_y,'XOR',carry, rcircuit )
   if x_xor_y__xor__carry.nil?
